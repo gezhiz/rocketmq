@@ -222,7 +222,7 @@ public class MQClientInstance {
 
         return mqList;
     }
-
+    //客户端的启动方法
     public void start() throws MQClientException {
 
         synchronized (this) {
@@ -233,13 +233,14 @@ public class MQClientInstance {
                     if (null == this.clientConfig.getNamesrvAddr()) {
                         this.mQClientAPIImpl.fetchNameServerAddr();
                     }
-                    // Start request-response channel
+                    // Start request-response channel 请求响应通道
+                    //MQClientApiImpl 封装了clieng和服务端的RPC
                     this.mQClientAPIImpl.start();
-                    // Start various schedule tasks
+                    // Start various schedule tasks  定时任务
                     this.startScheduledTask();
-                    // Start pull service
+                    // Start pull service 启动拉消息服务
                     this.pullMessageService.start();
-                    // Start rebalance service
+                    // Start rebalance service rebalance服务
                     this.rebalanceService.start();
                     // Start push service
                     this.defaultMQProducer.getDefaultMQProducerImpl().start(false);
